@@ -1,16 +1,14 @@
-from rest_framework import generics, permissions
-from todo.models import Todo
-from .serializer import TodoSerializer, UserSerializer , RegisterSerializer
 from django.contrib.auth.models import User
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics, permissions
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from rest_framework.views import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.status import (
-    HTTP_201_CREATED,
-    HTTP_400_BAD_REQUEST
-    )
-from django_filters.rest_framework import DjangoFilterBackend
+
+from todo.models import Todo
+
 from .filter import TodoFilter
-from rest_framework import filters
+from .serializer import RegisterSerializer, TodoSerializer, UserSerializer
 
 
 class ListCreateTodosAPIView(generics.ListCreateAPIView):

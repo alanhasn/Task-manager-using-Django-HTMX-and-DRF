@@ -1,20 +1,11 @@
 from django.urls import path
-from .views import (
-                    ListCreateTodosAPIView, 
-                    UsersAPIView,
-                    DetailUpdateDeleteTodoAPIView,
-                    RegisterAPIView
-                )
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView
-)
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularRedocView, 
-    SpectacularSwaggerView
-)
+from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView,
+                                   SpectacularSwaggerView)
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView, TokenVerifyView)
+
+from .views import (DetailUpdateDeleteTodoAPIView, ListCreateTodosAPIView,
+                    RegisterAPIView, UsersAPIView)
 
 urlpatterns = [
     path("todos/", ListCreateTodosAPIView.as_view(), name="list-todos"),
