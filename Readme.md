@@ -1,4 +1,3 @@
-````markdown
 # 📝 ToDo Manager API
 
 A clean and secure ToDo API built with **Django REST Framework**, featuring **JWT Authentication**, advanced filtering, search, ordering, and auto-generated documentation with **drf-spectacular**.
@@ -167,7 +166,7 @@ Auto-generated API docs using **drf-spectacular**:
 
 Pull requests are welcome. For major changes, please open an issue first.
 
----
+
 
 ## 📃 License
 
