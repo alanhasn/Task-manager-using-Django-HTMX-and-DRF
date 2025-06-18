@@ -33,7 +33,7 @@ This project allows users to:
 1. **Clone the repo**  
 ```bash
 git clone https://github.com/alanhasn/TodoList-API.git
-cd todo-api
+cd Todo-App-with-API
 ````
 
 2. **Create a virtual environment**
@@ -171,6 +171,3 @@ Pull requests are welcome. For major changes, please open an issue first.
 ## 📃 License
 
 MIT License – Free to use and modify.
-
-```
-
