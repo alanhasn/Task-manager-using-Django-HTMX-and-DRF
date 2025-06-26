@@ -45,7 +45,12 @@
   </label>
 
   <!-- Add New Task Button -->
-  <a href="#" class="btn btn-primary w-full md:w-auto"> ➕ Add New Task </a>
+  <a 
+    onclick="document.getElementById('add-todo-modal').showModal()"
+    class="btn btn-primary w-full md:w-auto">➕ Add New Task
+  </a>
+
+  {% include 'todos/partials/add-task-modal.html' %}
 </div>
 
 <!-- Tasks table -->
@@ -58,4 +63,14 @@
 >
   {% include './partials/table.html' %}
 </div>
+
+<!--re open the modal with related error-->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('fail', () => {
+      document.getElementById('add-todo-modal').showModal();
+    });
+  });
+</script>
+
 {% endblock content %}
