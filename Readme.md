@@ -30,17 +30,24 @@ This project allows users to:
 
 ## 📦 Setup Instructions
 
-1. **Clone the repo**  
+1. **Clone the repo**
 ```bash
-git clone https://github.com/alanhasn/TodoList-API.git
-cd Todo-App-with-API
-````
+git clone https://github.com/alanhasn/Task-manager-using-Django-HTMX-and-DRF
+cd Task-manager-using-Django-HTMX-and-DRF
 
-2. **Create a virtual environment**
-
-```bash
+# Create a virtual environment
 python -m venv venv
 source venv/bin/activate        # On Windows: venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Apply migrations
+python manage.py migrate
+
+# 5. Run the server
+python manage.py runserver
+
 ```
 
 3. **Install dependencies**
