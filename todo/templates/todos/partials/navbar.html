@@ -1,0 +1,93 @@
+<div class="navbar bg-base-100 shadow-md px-4">
+  <!-- Start -->
+  <div class="navbar-start">
+    <!-- Mobile dropdown menu -->
+    <div class="dropdown">
+      <button tabindex="0" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+        </svg>
+      </button>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+        <li><a>About</a></li>
+        <li>
+          <details>
+            <summary>API Docs</summary>
+            <ul class="p-2 bg-base-100 rounded-box shadow">
+              <li><a href="{% url 'api:swagger-ui' %}" target="_blank">Swagger UI</a></li>
+              <li><a href="{% url 'api:redoc' %}" target="_blank">Redoc</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary>Technologies</summary>
+            <ul class="p-2 bg-base-100 rounded-box shadow">
+              <li><a href="https://www.django-rest-framework.org/" target="_blank">DRF</a></li>
+              <li><a href="https://htmx.org/" target="_blank">HTMX</a></li>
+              <li><a href="https://daisyui.com" target="_blank">DaisyUI</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
+    <!-- Logo -->
+    <a class="btn btn-ghost text-xl font-bold">Todo Manager</a>
+  </div>
+
+  <!-- Center (for large screens) -->
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1">
+      <li><a>About</a></li>
+
+      <li>
+        <details>
+          <summary>API Docs</summary>
+          <ul class="p-2 bg-base-100 rounded-box shadow">
+            <li><a href="{% url 'api:swagger-ui' %}" target="_blank">Swagger</a></li>
+            <li><a href="{% url 'api:redoc' %}" target="_blank">Redoc</a></li>
+          </ul>
+        </details>
+      </li>
+
+      <li>
+        <details>
+          <summary>Technologies</summary>
+          <ul class="p-2 bg-base-100 rounded-box shadow">
+            <li><a href="https://www.django-rest-framework.org/" target="_blank">DRF</a></li>
+            <li><a href="https://htmx.org/" target="_blank">HTMX</a></li>
+            <li><a href="https://daisyui.com" target="_blank">DaisyUI</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- End -->
+  <div class="navbar-end space-x-2">
+    {% if user.is_authenticated %}
+      <!-- Dropdown user -->
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-sm rounded-btn">
+          <b style="font-size: large;">👤 {{ user.username }}</b>
+        </div>
+        <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-40">
+          <li><a href="#">Profile</a></li>
+          <li>
+            <form method="POST">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    {% else %}
+      <a href="#" class="btn btn-outline btn-primary btn-sm">Register</a>
+      <a href="#" class="btn btn-primary btn-sm">Login</a>
+    {% endif %}
+  </div>
+  
+</div>

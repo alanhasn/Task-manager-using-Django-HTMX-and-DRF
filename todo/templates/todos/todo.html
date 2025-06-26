@@ -1,0 +1,61 @@
+{% extends './base.html' %} 
+
+{% block title %}
+<title>Task Manager | Dashboard</title>
+{% endblock title %}
+
+{% block content %} 
+
+{% include './partials/navbar.html' %}
+<!-- Search + Add Button -->
+<div
+  class="mt-20 ml-7 px-6 flex flex-col md:flex-row items-center justify-between gap-4"
+>
+  <!-- Search Bar -->
+  <label class="input input-bordered flex items-center gap-2 w-full md:max-w-md">
+    <svg
+      class="h-5 w-5 opacity-60"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <g
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="2.5"
+        fill="none"
+        stroke="currentColor"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </g>
+    </svg>
+    <input
+        type="search"
+        name="search"
+        class="grow"
+        placeholder="Searchtasks..."
+        hx-get="{% url "todos:search" %}" 
+        hx-trigger="keyup delay:500ms"
+        hx-target="#tbody" 
+        hx-indicator="#spinner"
+        hx-on::before-request="document.getElementById('tbody').style.opacity= 0.4;"
+        hx-on::after-request="document.getElementById('tbody').style.opacity= 1.0;"
+      />
+     {% include 'todos/partials/loading-bar.html' %}
+  </label>
+
+  <!-- Add New Task Button -->
+  <a href="#" class="btn btn-primary w-full md:w-auto"> ➕ Add New Task </a>
+</div>
+
+<!-- Tasks table -->
+<div
+  class="mt-10 px-6"
+  hx-get="{% url 'todos:home' %}"
+  hx-trigger="load"
+  hx-target="#tbody"
+  hx-swap="innerHTML"
+>
+  {% include './partials/table.html' %}
+</div>
+{% endblock content %}

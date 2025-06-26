@@ -1,0 +1,32 @@
+<tr class="hover:bg-base-300">
+    {% if todo.completed %}
+        <td><del>{{ todo.title }}</del></td>
+    {% else %}
+        <td>{{ todo.title }}</td>
+    {% endif %}
+    <td>{{ todo.description|truncatechars:100 }}</td>
+    <td class="text-center">
+        <input
+            type="checkbox"
+            class="checkbox checkbox-success checkbox-sm"
+            {% if todo.completed %}checked{% endif %}
+            hx-post="{% url 'todos:check' todo.id %}"
+            hx-trigger="click"
+            hx-target="closest tr"
+            hx-swap="outerHTML"
+        />
+    </td>
+    <td class="flex justify-center gap-2"> 
+        <a href="#" class="btn btn-sm btn-outline btn-info">✏️ Edit</a>
+        <a 
+            class="btn btn-sm btn-outline btn-error"
+            hx-delete="{% url 'todos:delete_task' todo.id %}"
+            hx-trigger="click"
+            hx-confirm="Do you want to delete this task?"
+            hx-on:task-deleted="this.closest('tr').remove();" 
+            >
+            🗑️ Delete
+        </a>
+    </td>
+</tr>
+
