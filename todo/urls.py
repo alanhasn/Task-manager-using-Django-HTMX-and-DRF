@@ -1,13 +1,14 @@
 from django.urls import path
 
-from .views import check, delete_task, index, search , create_task
+from .views import *
 
 app_name = "todos"
 
 urlpatterns = [
-    path("",index , name="home"),
+    path("",list_task , name="home"),
     path('create-task/',create_task, name='create-todo'),
+    path('edit-task/<int:pk>', edit_task, name='edit-todo'),
     path("check/<int:pk>", check, name='check'),
     path("delete/<int:pk>", delete_task, name='delete_task'),
-    path("search" , search , name="search")
+    path("search" , search , name="search"),
 ]

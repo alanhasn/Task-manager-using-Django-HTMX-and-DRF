@@ -27,6 +27,10 @@ class ListCreateTodosAPIView(generics.ListCreateAPIView):
     ordering = ['-created_at']   
 
     def get_queryset(self):
+        # If the view is a fake view (used for Swagger documentation), return an empty queryset
+        if getattr(self, 'swagger_fake_view', False):
+            return Todo.objects.none()
+
         return Todo.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):

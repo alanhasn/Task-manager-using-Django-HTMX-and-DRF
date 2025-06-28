@@ -44,11 +44,43 @@
      {% include 'todos/partials/loading-bar.html' %}
   </label>
 
+  <!--Filters buttons-->
+  <div>
+    <a
+      hx-get="{% url 'todos:home' %}"
+      hx-target="#tbody"
+      hx-swap="innerHTML"
+      hx-indicator="#spinner"
+      hx-on::before-request="document.getElementById('tbody').style.opacity= 0.4;"
+      hx-on::after-request="document.getElementById('tbody').style.opacity= 1.0;"
+      class="btn btn-outline btn-primary mr-2"
+    >All Tasks</a>
+    <a
+      hx-get="{% url 'todos:home' %}?filter=uncompleted"
+      hx-target="#tbody"
+      hx-swap="innerHTML"
+      hx-indicator="#spinner"
+      hx-on::before-request="document.getElementById('tbody').style.opacity= 0.4;"
+      hx-on::after-request="document.getElementById('tbody').style.opacity= 1.0;"
+      class="btn btn-outline btn-warning mr-2"
+    >Uncompleted</a>
+    <a
+      hx-get="{% url 'todos:home' %}?filter=completed"
+      hx-target="#tbody"
+      hx-swap="innerHTML"
+      hx-indicator="#spinner"
+      hx-on::before-request="document.getElementById('tbody').style.opacity= 0.4;"
+      hx-on::after-request="document.getElementById('tbody').style.opacity= 1.0;"
+      class="btn btn-outline btn-success"
+    >Completed</a>       
+  </div>
+
   <!-- Add New Task Button -->
   <a 
     onclick="document.getElementById('add-todo-modal').showModal()"
     class="btn btn-primary w-full md:w-auto">➕ Add New Task
   </a>
+
 
   {% include 'todos/partials/add-task-modal.html' %}
 </div>

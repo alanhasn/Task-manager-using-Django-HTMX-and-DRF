@@ -1,13 +1,14 @@
-<!--add-task-modal file-->
-<dialog id="add-todo-modal" class="modal">
+<!--edit-task-modal file-->
+<dialog id="edit-todo-modal" class="modal" open>
   <div class="modal-box">
-    <h3 class="font-bold text-lg mb-4">Add New Task</h3>
+    <h3 class="font-bold text-lg mb-4">Edit the Task</h3>
 
     <form 
-        hx-post="{% url 'todo:create-todo' %}"
-        hx-target="#tbody"
-        hx-swap="afterbegin"
-        hx-on:success="document.getElementById('add-todo-modal').close(); this.reset();"
+        hx-post="{% url 'todos:edit-todo' todo.id %}"
+        hx-target="#todo-{{ todo.id }}"
+        hx-swap="outerHTML"
+        
+        hx-on:task-edited="document.getElementById('edit-todo-modal').close(); this.reset();"
         class="mb-4"
     >
       {% csrf_token %}
@@ -36,10 +37,11 @@
 
       <!-- Actions -->
       <div class="modal-action">
-        <button type="button" class="btn" onclick="document.getElementById('add-todo-modal').close()">Cancel</button>
-        <button type="submit" class="btn btn-primary">Add Task</button>
+        <button type="button" class="btn" onclick="document.getElementById('edit-todo-modal').close()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Task</button>
       </div>
 
     </form>
   </div>
 </dialog>
+

@@ -1,10 +1,11 @@
-<tr class="hover:bg-base-300">
+<tr id="todo-{{ todo.id }}" class="hover:bg-base-300">
     {% if todo.completed %}
-        <td><del>{{ todo.title }}</del></td>
+        <td class="line-through decoration-2 decoration-gray-500 text-gray-400">{{ todo.title }}</td>
+        <td class="line-through decoration-2 decoration-gray-400 text-gray-400">{{ todo.description|truncatechars:100 }}</td>
     {% else %}
         <td>{{ todo.title }}</td>
+        <td>{{ todo.description|truncatechars:100 }}</td>
     {% endif %}
-    <td>{{ todo.description|truncatechars:100 }}</td>
     <td class="text-center">
         <input
             type="checkbox"
@@ -17,7 +18,14 @@
         />
     </td>
     <td class="flex justify-center gap-2"> 
-        <a href="#" class="btn btn-sm btn-outline btn-info">✏️ Edit</a>
+        <a 
+        class="btn btn-sm btn-outline btn-info"
+        hx-get="{% url 'todos:edit-todo' todo.id %}" 
+        hx-target="#dialog-container" 
+        hx-swap="innerHTML"
+        >
+        ✏️ Edit</a>  
+        
         <a 
             class="btn btn-sm btn-outline btn-error"
             hx-delete="{% url 'todos:delete_task' todo.id %}"
