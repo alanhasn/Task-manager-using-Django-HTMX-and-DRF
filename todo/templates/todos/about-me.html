@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me | Alan</title>
+
+  <!-- TailwindCSS & DaisyUI -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Animation -->
+  <style>
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out both;
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="bg-base-100 text-base-content">
+
+    <!-- Back Link -->
+    <div class="p-4">
+        <a href="{% url "todos:home" %}" 
+            class="btn btn-sm btn-outline btn-primary">
+            ↩ Back
+        </a>
+    </div>
+
+    <!-- Main Content -->
+  <div class="min-h-screen flex items-center justify-center px-6 py-20 lg:py-28">
+    <div class="max-w-3xl w-full space-y-16 text-center animate-fade-in-up">
+
+      <!-- Profile Card -->
+      <div class="bg-base-200/80 backdrop-blur-xl border border-primary/20 rounded-3xl shadow-xl p-10 transition-all duration-300 hover:shadow-2xl">
+        <h1 class="text-5xl font-bold text-primary mb-3">👨‍💻 Alan</h1>
+        <p class="text-lg text-base-content opacity-80 mb-6">
+          Backend Django Developer | Networking & Cybersecurity Enthusiast | Kotlin Learner
+        </p>
+
+        <div class="prose lg:prose-lg text-left text-base-content max-w-none">
+          <p>
+            I'm a backend developer passionate about building <strong>secure</strong>, <strong>maintainable</strong>, and <strong>production-ready APIs</strong> using Python and Django. I enjoy solving real-world problems through structured and scalable backend solutions.
+          </p>
+          <p>
+            I’ve published a Python security library called <strong>SecureTool</strong> on PyPI, created a custom <strong>IP Scanner</strong>, and built several projects like <strong>TaskCLI</strong> (Kotlin + Coroutines + Exposed ORM) and <strong>Django HTMX ContactHub</strong>.
+          </p>
+          <p>
+            My main stack includes Django REST Framework, HTMX, SimpleJWT, and TailwindCSS (via DaisyUI). I’m also diving into <strong>low-level networking</strong> and Kotlin’s <strong>coroutine-based concurrency model</strong>.
+          </p>
+          <p>
+            I care about <strong>security-first development</strong>, <strong>code readability</strong>, and building tools that empower others to learn and grow.
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact and Links -->
+      <div class="space-y-4">
+        <h2 class="text-2xl font-semibold text-primary">🔗 Contact & Links</h2>
+        <div class="flex flex-wrap justify-center gap-4 mt-2">
+          <a href="https://github.com/alanhasn" target="_blank"
+             class="btn btn-neutral btn-sm transition-transform duration-200 hover:scale-105">
+            GitHub Profile
+          </a>
+          <a href="https://github.com/alanhasn/Task-manager-using-Django-HTMX-and-DRF" target="_blank"
+             class="btn btn-outline btn-primary btn-sm transition-transform duration-200 hover:scale-105">
+            📂 Project Source Code
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

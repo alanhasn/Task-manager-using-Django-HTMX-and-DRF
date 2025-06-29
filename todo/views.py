@@ -124,3 +124,7 @@ def search(request):
         Q(title__icontains=query) # Search by title
     )
     return render(request , "todos/partials/table-rows.html" , {"todos":todos})
+
+@login_required(login_url="accounts:login")
+def about_me(request):
+    return render(request, "todos/about-me.html")

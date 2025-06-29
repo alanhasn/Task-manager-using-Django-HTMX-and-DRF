@@ -19,3 +19,11 @@ __pycache__/
 *.log
 *.pot
 *.pyc
+
+todo/__pycache__/
+*.sqlite3
+todo/migrations/
+*.sqlite3-journal
+
+accounts/__pycache__/
+accounts/migrations/
