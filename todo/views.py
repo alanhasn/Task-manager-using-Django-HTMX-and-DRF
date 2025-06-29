@@ -6,9 +6,9 @@ from django.views.decorators.http import require_http_methods
 from .models import Todo
 from .forms import TaskForm
 
-
-@login_required(login_url='/admin/login/')
-def list_task(request):
+# HOME VIEW
+@login_required(login_url="accounts:login")
+def list_tasks(request):
     form = TaskForm()
     
     # Filter tasks
@@ -26,7 +26,8 @@ def list_task(request):
 
     return render(request, "todos/todo.html", {"todos": todos,"form":form})
 
-@login_required(login_url='/admin/login/')
+# CREATE TASK VIEW
+@login_required(login_url="accounts:login")
 @require_http_methods(["GET", "POST"])
 def create_task(request):
     if request.method == "POST":
@@ -42,15 +43,17 @@ def create_task(request):
             return response
         else:
             response = render(request , "todos/partials/add-task-modal.html" , {"form":form})
+            # If form is not valid, we need to return the form with errors
             response['HX-Retarget'] = '#add-todo-modal'
             response['HX-Reswap'] = 'outerHTML'
-            response['HX-Trigger-After-Settle'] = 'fail'
+            response['HX-Trigger-After-Settle'] = 'fail' # add fail HTMX trigger in the response
             return response
     else:
         form = TaskForm()
         return render(request , "todos/partials/add-task-modal.html" , {"form":form})
 
-@login_required(login_url='/admin/login/')
+# EDIT TASK VIEW
+@login_required(login_url="accounts:login")
 @require_http_methods(["GET", "POST"])
 def edit_task(request , pk):
     todo = get_object_or_404(Todo , pk=pk , user=request.user)
@@ -79,8 +82,8 @@ def edit_task(request , pk):
         
         return render(request , "todos/partials/edit-task-modal.html" , {"form":form , "todo":todo})
         
-
-@login_required
+# CHECK TASK VIEW
+@login_required(login_url="accounts:login")
 @require_http_methods(["POST"])
 # Function for check the task as completed
 def check(request, pk):
@@ -97,7 +100,8 @@ def check(request, pk):
     todos = Todo.objects.all()
     return render(request, "todos/todo.html", {"todos": todos})
 
-@login_required
+# DELETE TASK VIEW
+@login_required(login_url="accounts:login")
 @require_http_methods(["DELETE"])
 # view for delete task
 def delete_task(request, pk):
@@ -110,14 +114,13 @@ def delete_task(request, pk):
     response["HX-Trigger"] = "task-deleted" # add task-deleted HTMX trigger in the response
     return response
 
-@login_required(login_url='/admin/login/')
+# SEARCH TASK VIEW
+@login_required(login_url="accounts:login")
 def search(request):
-    import time
-    time.sleep(1)
 
     query = request.GET.get("search")
 
     todos = request.user.todos.filter(
-        Q(title__icontains=query)
+        Q(title__icontains=query) # Search by title
     )
     return render(request , "todos/partials/table-rows.html" , {"todos":todos})

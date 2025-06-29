@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-md px-4">
+<div class="navbar bg-base-100 shadow-md px-4 fixed z-10 top-0 left-0 right-0 ">
   <!-- Start -->
   <div class="navbar-start">
     <!-- Mobile dropdown menu -->
@@ -34,7 +34,7 @@
       </ul>
     </div>
     <!-- Logo -->
-    <a class="btn btn-ghost text-xl font-bold">Todo Manager</a>
+    <a class="btn btn-ghost text-xl font-bold" href="{% url "todos:home" %}">Todo Manager</a>
   </div>
 
   <!-- Center (for large screens) -->
@@ -75,18 +75,13 @@
           <b style="font-size: large;">👤 {{ user.username }}</b>
         </div>
         <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-40">
-          <li><a href="#">Profile</a></li>
           <li>
-            <form method="POST">
-              {% csrf_token %}
-              <button type="submit">Logout</button>
-            </form>
+            <a href="{% url "accounts:logout" %}">Signout</a>
           </li>
         </ul>
       </div>
     {% else %}
-      <a href="#" class="btn btn-outline btn-primary btn-sm">Register</a>
-      <a href="#" class="btn btn-primary btn-sm">Login</a>
+      <a href="{% url "accounts:login" %}" class="btn btn-primary btn-sm">Login</a>
     {% endif %}
   </div>
   

@@ -23,15 +23,17 @@
 
     {% block title %}{% endblock title %}
 </head>
-<body>
-    
-    {% block content %}
-        {# Page content is here #}
-    {% endblock content %}
+<body class="pt-30 bg-base-200 min-h-screen">
+    {% include 'todos/partials/navbar.html' %}
+
+    <main class="container mx-auto px-2 md:px-16 lg:px-32 xl:px-48 2xl:px-64"></main>
+        {% block content %}{% endblock %}
+    </main>
 
     <div id="dialog-container"></div>
     
 <script>
+    // Add CSRF token to all HTMX requests
   document.body.addEventListener('htmx:configRequest', (event) => {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     event.detail.headers['X-CSRFToken'] = csrfToken;
