@@ -1,43 +1,66 @@
-# 📝 ToDo Manager API
+# 📝 ToDo Manager – API & Interactive UI
 
-A clean and secure ToDo API built with **Django REST Framework**, featuring **JWT Authentication**, advanced filtering, search, ordering, and auto-generated documentation with **drf-spectacular**.
-
----
-
-## 🚀 Overview
-
-This project allows users to:
-
-- Register a new account
-- Log in using JWT (JSON Web Token)
-- Create / Read / Update / Delete their own tasks (ToDos)
-- Filter, search, and order tasks
-- Access a fully interactive API documentation (Swagger & ReDoc)
+A clean, secure, and dynamic ToDo Management App built with **Django**, **Django REST Framework**, **HTMX**, and **TailwindCSS (DaisyUI)**.  
+It supports both a fully-documented RESTful API and an interactive web UI without heavy JavaScript.
 
 ---
 
-## 🛠️ Tech Stack
+## 📸 Project Preview
 
-| Technology | Description                |
-|------------|----------------------------|
-| Django     | v5.2.3                     |
-| DRF        | Django REST Framework      |
-| SimpleJWT  | Token-based authentication |
-| drf-spectacular | OpenAPI 3 documentation |
-| django-filter | Filtering support         |
+### Dashboard
+![Dashboard| List of tasks](images/main-page-after-edit.png)
+### Modals
+![Create Task Modal](images/Add-task-modal.png)
+
+![Edit Task Modal](images/edit-task.png)
+### Authentcation
+![Login Page](images/login.png)
+
+![Register Page](images/register.png)
+
 
 ---
 
-## 📦 Setup Instructions
+## 🚀 Features
 
-1. **Clone the repo**
+### ✅ Backend API (DRF + JWT)
+- Register / Login via JWT
+- Create / Read / Update / Delete your tasks
+- Tasks are user-specific (private per user)
+- Filtering, searching, ordering support
+- Swagger / ReDoc auto documentation
+
+### 🌐 Frontend UI (HTMX + TailwindCSS)
+- Dynamic task list
+- Modal for create / update tasks
+- Built using **HTMX + Django Partials**
+- Fully responsive with **DaisyUI design**
+
+---
+
+## 🧰 Tech Stack
+
+| Layer         | Tools Used                                 |
+|---------------|---------------------------------------------|
+| Backend       | Django 5.2.3, Django REST Framework          |
+| Auth          | Simple JWT (Access/Refresh tokens)          |
+| API Docs      | drf-spectacular (OpenAPI/Swagger/ReDoc)     |
+| UI Framework  | Django Templates + HTMX                     |
+| CSS Styling   | TailwindCSS + DaisyUI                       |
+| Filtering     | django-filter                               |
+
+---
+
+## 📦 Installation
+
 ```bash
+# 1. Clone repo
 git clone https://github.com/alanhasn/Task-manager-using-Django-HTMX-and-DRF
 cd Task-manager-using-Django-HTMX-and-DRF
 
-# Create a virtual environment
+# 2. Create virtual env
 python -m venv venv
-source venv/bin/activate        # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
@@ -45,34 +68,13 @@ pip install -r requirements.txt
 # 4. Apply migrations
 python manage.py migrate
 
-# 5. Run the server
+# 5. Run server
 python manage.py runserver
-
-```
-
-3. **Install dependencies**
-
-```bash
-pip install -r requirements.txt
-```
-
-4. **Apply migrations**
-
-```bash
-python manage.py migrate
-```
-
-5. **Run the server**
-
-```bash
-python manage.py runserver
-```
+````
 
 ---
 
 ## 🔐 Authentication (JWT)
-
-We use [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/) for secure login.
 
 ### ✅ Register
 
@@ -80,8 +82,8 @@ We use [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/) for
 
 ```json
 {
-  "username": "alan",
-  "email": "alan@example.com",
+  "username": "mohammed doe",
+  "email": "doela@example.com",
   "password": "StrongPassword123"
 }
 ```
@@ -92,12 +94,12 @@ We use [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/) for
 
 ```json
 {
-  "username": "alan",
+  "username": "mohammed doe",
   "password": "StrongPassword123"
 }
 ```
 
-### 🔁 Refresh Token
+### 🔄 Refresh Token
 
 `POST /api/token/refresh/`
 
@@ -111,70 +113,86 @@ We use [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/) for
 
 ## 📚 API Documentation
 
-Auto-generated API docs using **drf-spectacular**:
+![Swagger UI](images/swager-ui.png)
+![Redoc](images/redoc.png)
 
-* **Swagger UI:**
-  `http://127.0.0.1:8000/api/docs/`
-
-* **Schema (OpenAPI):**
-  `http://127.0.0.1:8000/api/schema/`
+### Access the API documentation at:
+* Swagger UI → [http://127.0.0.1:8000/api/schema/swagger-ui/](http://127.0.0.1:8000/api/schema/swagger-ui)
+* Redoc → [http://127.0.0.1:8000/api/schema/redoc/](http://127.0.0.1:8000/api/schema/redoc)
+* Schema YML → [http://127.0.0.1:8000/api/schema/](http://127.0.0.1:8000/api/schema)
 
 ---
 
 ## 🧪 API Endpoints
 
-| Method | Endpoint         | Description                                          | Auth Required |
-| ------ | ---------------- | ---------------------------------------------------- | ------------- |
-| GET    | /api/todos/      | List user’s todos                                    | ✅ Yes         |
-| POST   | /api/todos/      | Create a new todo                                    | ✅ Yes         |
-| GET    | /api/todos/{id}/ | Retrieve a todo by ID                                | ✅ Yes         |
-| PUT    | /api/todos/{id}/ | Update a todo                                        | ✅ Yes         |
-| DELETE | /api/todos/{id}/ | Delete a todo                                        | ✅ Yes         |
-| GET    | /api/users/      | Get current authenticated user info with their todos | ✅ Yes         |
+| Method | Endpoint         | Description                            | Auth |
+| ------ | ---------------- | -------------------------------------- | ---- |
+| GET    | /api/todos/      | List current user’s todos              | ✅    |
+| POST   | /api/todos/      | Create a new todo                      | ✅    |
+| GET    | /api/todos/{id}/ | Retrieve a specific todo               | ✅    |
+| PUT    | /api/todos/{id}/ | Update a todo                          | ✅    |
+| DELETE | /api/todos/{id}/ | Delete a todo                          | ✅    |
+| GET    | /api/users/      | Get authenticated user + related todos | ✅    |
 
 ---
 
-## 🔍 Filtering, Search, Ordering
+## 🔍 Filtering, Searching, Ordering
 
-| Feature           | Query Example                            |
-| ----------------- | ---------------------------------------- |
-| Filter by status  | `/api/todos/?completed=true`             |
-| Filter by date    | `/api/todos/?created_at__gte=2024-01-01` |
-| Search title/desc | `/api/todos/?search=meeting`             |
-| Order by update   | `/api/todos/?ordering=-updated_at`       |
+![Search Example](images/search.png)
 
----
-
-## 📂 Project Structure (Simplified)
-
-```
-|── project/
-│ └── settings.py
-│
-├── todo/ # main app
-│ ├── models.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── urls.py 
-│ │
-│ └── api/ # API logic 
-│ ├── views.py
-│ ├── serializers.py
-│ ├── urls.py 
-│ ├── filters.py
-│
-├── manage.py
-└── requirements.txt
-```
+| Feature    | Example                                  |
+| ---------- | ---------------------------------------- |
+| Filter     | `/api/todos/?completed=true`             |
+| Date Range | `/api/todos/?created_at__gte=2024-01-01` |
+| Search     | `/api/todos/?search=meeting`             |
+| Order      | `/api/todos/?ordering=-updated_at`       |
 
 ---
 
-## 🤝 Contributing
+## 🌐 Frontend (HTMX UI)
 
-Pull requests are welcome. For major changes, please open an issue first.
+### 💻 Key UI Pages
 
+| Page                | Description                                               |
+| ------------------- |-----------------------------------------------------------|
+| 🔐 Login / Register | Forms for Session authentication ,  login and registration |
+| 🏠 Dashboard        | List of tasks for logged-in user                          |
+| 🆕 Create Task      | Form to add new task using `hx-post`                      |
+| 📝 Update Task      | Inline or modal form using `hx-post`          |
+| ❌ Delete Task       | Deletion via `hx-delete` with confirmation                |
+---
 
+### ⚙️ HTMX Interactions Used
+
+* `hx-get` → Load dynamic content (e.g. task table)
+* `hx-post` → Create task
+* `hx-delete` → Delete task
+* `hx-target`, `hx-swap` → Update DOM elements
+* `hx-trigger` → triggers like `load`, `submit`, `change`
+
+---
+
+## 🧩 Best Practices Followed
+
+* Separation of API & UI logic
+* Modularized app using `todo/api/`
+* DRY templates using `partials/`
+* Auth-protected views and endpoints
+* Password validation with strong rules
+* HTMX + Django used progressively (no JS frameworks)
+
+---
+
+## 🧑‍💻 Author
+
+* 👤 Developed by: **@alanhasn**
+* 📅 first Issue Closed: `June 29, 2025`
+* 📌 Project Repository:
+  [https://github.com/alanhasn/Task-manager-using-Django-HTMX-and-DRF](https://github.com/alanhasn/Task-manager-using-Django-HTMX-and-DRF)
+
+---
 
 ## 📃 License
 
-MIT License – Free to use and modify.
+This project is licensed under the MIT License.
+See `LICENSE` file for more details.
