@@ -6,7 +6,7 @@ app_name = "accounts"
 
 urlpatterns = [
     # URL patterns for user authentication
-    path('signup/', signup, name='signup'),
-    path('login/', login_view , name='login'),
-    path('logout/', logout_view, name='logout'),
+    path('signup/', RegisterView.as_view(), name='signup'),
+    path('login/', CustomLoginView.as_view() , name='login'),
+    path('logout/',logout_view, name='logout'),
 ]

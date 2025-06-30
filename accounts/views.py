@@ -1,48 +1,46 @@
+# =========== IMPORTS ===========
 from django.contrib import messages
-from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
 
 from .forms import CustomUserCreationForm
 
+# REGISTER USER VIEW
+class RegisterView(FormView):
+    template_name = "registration/signup.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("todos:home")
 
-# Signup view for user registration
-def signup(request):
-    if request.user.is_authenticated:
-        return redirect("todos:home")
+    # This method is called when the form is valid
+    # It saves the user and logs them in
+    def form_valid(self, form):
+        user = form.save()
+        auth_login(self.request , user=user )
+        return super().form_valid(form)
     
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user) # Automatically log in the user after registration
+    # This method is called to check if the user is authenticated
+    # If they are, it redirects them to the home page
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
             return redirect("todos:home")
-    else:
-        form = CustomUserCreationForm()
-    return render(request, "registration/signup.html", {"form": form})
+        return super().dispatch(request, *args, **kwargs)
 
-# Login view for user authentication
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect("todos:home")
-    
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
+# LOGIN VIEW
+class CustomLoginView(LoginView):
+    template_name = "registration/login.html"
+    redirect_authenticated_user = True # Redirect authenticated users to the home page
 
-        if user is not None:
-            auth_login(request, user)
-            return redirect("todos:home")
-        else:
-            return render(request, "registration/login.html", {"error": "Invalid credentials"})
+    # This method is called to get the success URL after login
+    def get_success_url(self):
+        return reverse_lazy("todos:home")
 
-    return render(request, "registration/login.html")
-
+# LOGOUT VIEW USING FUNCTION BASED VIEW
 @login_required(login_url="accounts:login")
 def logout_view(request):
-    auth_logout(request)
-    messages.success(request, "You have been logged out successfully.")
+    auth_logout(request)  # Remove the user from the session
     return redirect("accounts:login")
