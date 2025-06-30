@@ -1,8 +1,12 @@
-from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
-from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+
+from .forms import CustomUserCreationForm
+
 
 # Signup view for user registration
 def signup(request):
