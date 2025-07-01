@@ -2,6 +2,7 @@ venv/
 ENV/
 env/
 .venv/
+api.http
 
 db.sqlite3
 
