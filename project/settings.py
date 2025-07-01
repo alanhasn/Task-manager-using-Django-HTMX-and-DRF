@@ -139,6 +139,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
+    # throttle settings
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'list_tasks': '60/hour',
+        'todo_edit': '30/hour',
+        'user_info': '20/hour',
+    }
+
 }
 
 SPECTACULAR_SETTINGS = {

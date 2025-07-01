@@ -4,7 +4,7 @@ from rest_framework import filters, generics, permissions
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from rest_framework.views import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework.throttling import ScopedRateThrottle
 from todo.models import Todo
 
 from .filter import TodoFilter
@@ -12,6 +12,9 @@ from .serializer import RegisterSerializer, TodoSerializer, UserSerializer
 
 
 class ListCreateTodosAPIView(generics.ListCreateAPIView):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "list_tasks"
+
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated]    
 
@@ -37,6 +40,9 @@ class ListCreateTodosAPIView(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
 class DetailUpdateDeleteTodoAPIView(generics.RetrieveUpdateDestroyAPIView):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "todo_edit"
+
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -44,6 +50,9 @@ class DetailUpdateDeleteTodoAPIView(generics.RetrieveUpdateDestroyAPIView):
         return Todo.objects.filter(user=self.request.user)
 
 class UsersAPIView(generics.RetrieveAPIView):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user_info"
+
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 

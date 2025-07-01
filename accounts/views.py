@@ -35,7 +35,7 @@ class RegisterView(FormView):
 class CustomLoginView(LoginView):
     template_name = "registration/login.html"
     redirect_authenticated_user = True # Redirect authenticated users to the home page
-
+    
     # This method is called to get the success URL after login
     def get_success_url(self):
         return reverse_lazy("todos:home")

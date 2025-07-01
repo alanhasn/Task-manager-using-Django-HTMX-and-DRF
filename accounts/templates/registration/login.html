@@ -16,11 +16,15 @@
         <div class="w-full max-w-md p-8 shadow-lg bg-white rounded-lg mt-4">
             <h2 class="text-3xl font-bold mb-6 text-center text-primary">Login</h2>
             
-            <form method="POST" class="space-y-4" novalidate>
+            <form method="POST" class="space-y-4">
                 {% csrf_token %}
-                
-                {% if error %}
-                    <h4>{{ error }}</h4>
+
+                {% if form.non_field_errors %}
+                    <div class="text-red-500 mb-4">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                    </div>
                 {% endif %}
                     
                 <!-- Username -->
@@ -30,7 +34,7 @@
                     </label>
                     <input type="text" name="username" class="input input-bordered w-full" placeholder="Your username" value="{{ request.POST.username }}">
                     {% if form.errors.username %}
-                        <p class="text-error text-sm mt-1">{{ form.errors.username.0 }}</p>
+                        <p class="text-error text-sm mt-1">{{ form.errors.username }}</p>
                     {% endif %}
                 </div>
 
@@ -41,7 +45,7 @@
                     </label>
                     <input type="password" name="password" class="input input-bordered w-full" placeholder="Your password">
                     {% if form.errors.password1 %}
-                        <p class="text-error text-sm mt-1">{{ form.errors.password1.0 }}</p>
+                        <p class="text-error text-sm mt-1">{{ form.errors.password1 }}</p>
                     {% endif %}
                 </div>
 
