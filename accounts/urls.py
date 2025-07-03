@@ -10,3 +10,10 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view() , name='login'),
     path('logout/',logout_view, name='logout'),
 ]
+
+hx_urlpatterns=[
+    path("check_username/" , check_username , name="check_username"),
+    path("check_email/" , check_email , name="check_email")
+]
+
+urlpatterns += hx_urlpatterns

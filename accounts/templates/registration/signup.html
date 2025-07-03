@@ -1,4 +1,7 @@
-{% load widget_tweaks %}
+{% load widget_tweaks %} <!-- Load the widget tweaks-->
+
+{% url "accounts:check_username" as check_username_url %} <!--Create username url to use it with htmx request-->
+{% url "accounts:check_email" as check_email_url %} <!--Create email url to use it with htmx request-->
 
 <!DOCTYPE html>
 <html lang="en"> <!-- Optional: change theme -->
@@ -9,6 +12,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script> <!--HTMX Scripts-->
+
 </head>
 <body class="min-h-screen bg-base-200">
     {% include 'todos/partials/navbar.html' %}
@@ -25,10 +30,14 @@
                     <label class="label">
                         <span class="label-text">Username</span>
                     </label>
-                    {{ form.username|add_class:"input input-bordered w-full" }}
-                    {% if form.username.errors %}
-                        <p class="text-error text-sm mt-1">{{ form.username.errors }}</p>
-                    {% endif %}
+                    {% render_field form.username class="input input-bordered w-full" hx-post=check_username_url hx-trigger="keyup delay:500ms" hx-target="#username-error" hx-swap="outerhtml" %}
+                    <!--HTMX target-->
+                    <div id="username-error">
+                        {% if form.username.errors %}
+                            <p class="text-error text-sm mt-1 text-red-500">{{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
                 </div>
 
                 <!-- Email -->
@@ -36,10 +45,13 @@
                     <label class="label">
                         <span class="label-text">Email</span>
                     </label>
-                    {{ form.email|add_class:"input input-bordered w-full" }}
-                    {% if form.email.errors %}
-                        <p class="text-error text-sm mt-1">{{ form.email.errors }}</p>
-                    {% endif %}
+                    {% render_field form.email class="input input-bordered w-full" hx-post=check_email_url hx-trigger="keyup delay:500ms" hx-target="#email-error" hx-swap="outerhtml" %}
+                    <!--HTMX target-->
+                    <div id="email-error">
+                        {% if form.email.errors %}
+                            <p class="text-error text-sm mt-1 text-red-500">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                 </div>
 
                 <!-- Password -->
