@@ -30,7 +30,7 @@
                     <label class="label">
                         <span class="label-text">Username</span>
                     </label>
-                    {% render_field form.username class="input input-bordered w-full" hx-post=check_username_url hx-trigger="keyup delay:500ms" hx-target="#username-error" hx-swap="outerhtml" %}
+                    {% render_field form.username class="input input-bordered w-full" hx-post=check_username_url hx-trigger="keyup changed delay:500ms" hx-target="#username-error" hx-swap="outerhtml" %}
                     <!--HTMX target-->
                     <div id="username-error">
                         {% if form.username.errors %}
@@ -45,7 +45,7 @@
                     <label class="label">
                         <span class="label-text">Email</span>
                     </label>
-                    {% render_field form.email class="input input-bordered w-full" hx-post=check_email_url hx-trigger="keyup delay:500ms" hx-target="#email-error" hx-swap="outerhtml" %}
+                    {% render_field form.email class="input input-bordered w-full" hx-post=check_email_url hx-trigger="keyup changed delay:500ms" hx-sync="this:abort" hx-target="#email-error" hx-swap="outerhtml" %}
                     <!--HTMX target-->
                     <div id="email-error">
                         {% if form.email.errors %}
