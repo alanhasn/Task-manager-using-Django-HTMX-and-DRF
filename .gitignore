@@ -28,3 +28,4 @@ todo/migrations/
 
 accounts/__pycache__/
 accounts/migrations/
+/staticfiles/
