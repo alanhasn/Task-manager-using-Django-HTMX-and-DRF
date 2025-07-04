@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.20/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <div class="flex justify-center mb-6">
+            <div class="mockup-window border bg-base-100 shadow-lg">
+                <div class="flex flex-col items-center px-8 py-12">
+                    <h1 class="text-8xl font-extrabold text-error mb-4">404</h1>
+                    <h2 class="text-2xl font-bold mb-2 text-base-content">Page Not Found</h2>
+                    <p class="mb-6 text-base-content/70">Sorry, the page you are looking for does not exist or has been moved.</p>
+                    <a href="{% url "todos:home" %}" class="btn btn-primary btn-wide">
+                        Go Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        <p class="text-sm text-base-content/50">If you think this is a mistake, please <a href="mailto:whoamialan11@gmail.com" class="link link-primary">contact support</a>.</p>
+    </div>
+</body>
+</html>

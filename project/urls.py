@@ -23,3 +23,6 @@ urlpatterns = [
     path('accounts/', include("accounts.urls" , namespace="accounts")),
     path("api/", include("todo.api.urls" , namespace="api"))
 ]
+
+# Custom 404 URL handler
+# handler404 = "accounts.views.not_found_view"

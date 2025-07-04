@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>403 Forbidden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.20/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+    <div class="card w-full max-w-md shadow-xl bg-base-100">
+        <div class="card-body items-center text-center">
+            <div class="avatar mb-4">
+                <div class="w-24 rounded-full ring ring-error ring-offset-base-100 ring-offset-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-1.414 1.414M6.343 17.657l-1.415-1.414M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-5xl font-bold text-error">403</h1>
+            <p class="py-4 text-lg text-base-content">Sorry, you don't have permission to access this page.</p>
+            <a href="{% url "todos:home" %}" class="btn btn-error btn-outline mt-2">Go Home</a>
+        </div>
+    </div>
+</body>
+</html></div>

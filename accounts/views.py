@@ -100,3 +100,8 @@ def check_email(request):
         return HttpResponse('<p class="text-error">This email already registered.</p>')
 
     return HttpResponse('<p class="text-success">Email is available ✓</p>')
+
+
+# 404 page not found view
+# def not_found_view(request , exception=True):
+#     return render(request , "404.html" , status=403)
