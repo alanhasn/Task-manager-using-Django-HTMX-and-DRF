@@ -9,6 +9,9 @@ urlpatterns = [
     path('signup/', RegisterView.as_view(), name='signup'),
     path('login/', CustomLoginView.as_view() , name='login'),
     path('logout/',logout_view, name='logout'),
+    path("activation-sent/", ActivationSentView.as_view(), name="activation_sent"),
+    path('activate/<uidb64>/<token>/', activate, name='activate'),
+
 ]
 
 hx_urlpatterns=[

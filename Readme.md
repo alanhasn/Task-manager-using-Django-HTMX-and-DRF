@@ -8,6 +8,7 @@ It supports both a fully-documented RESTful API and an interactive web UI withou
 ## 📸 Project Preview
 
 ### Dashboard
+![Dashboard| No task](images/notask.png)
 ![Dashboard| List of tasks](images/main-page-after-edit.png)
 ### Modals
 ![Create Task Modal](images/Add-task-modal.png)

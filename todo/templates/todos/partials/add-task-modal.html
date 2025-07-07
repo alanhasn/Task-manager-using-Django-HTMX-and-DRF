@@ -4,11 +4,12 @@
     <h3 class="font-bold text-lg mb-4">Add New Task</h3>
 
     <form 
+        class="mb-4"
         hx-post="{% url 'todo:create-todo' %}"
         hx-target="#tbody"
         hx-swap="afterbegin"
         hx-on:success="document.getElementById('add-todo-modal').close(); this.reset();"
-        class="mb-4"
+        hx-on::after-request="document.getElementById('no-tasks-alert')?.remove()"
     >
       {% csrf_token %}
 

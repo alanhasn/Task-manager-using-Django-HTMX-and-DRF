@@ -2,7 +2,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseNotAllowed
-from django.shortcuts import HttpResponse, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView
 from django.views.generic.base import TemplateView
@@ -113,15 +113,17 @@ class UpdateTaskStatusView(LoginRequiredMixin, View):
         return HttpResponseNotAllowed(["POST"])
     
 class DeleteTaskView(LoginRequiredMixin, View):
-    """Delete a task via HTMX request."""
+    """Delete a task via HTMX request and return updated table body."""
 
     def delete(self, request, pk):
-        """Delete the task and return an empty HTMX success response."""
         todo = get_object_or_404(Todo, pk=pk, user=request.user)
         todo.delete()
-        response = HttpResponse(status=204)
-        response["HX-Trigger"] = "task-deleted"
-        return response
+
+        # Get remaining tasks
+        todos = Todo.objects.filter(user=request.user)
+
+        # Return updated table body (with rows or "no tasks" alert)
+        return render(request, 'todos/partials/table-rows.html', {'todos': todos})
 
     def dispatch(self, request, *args, **kwargs):
         """Allow only DELETE requests."""

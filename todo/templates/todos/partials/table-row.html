@@ -1,4 +1,4 @@
-<tr id="todo-{{ todo.id }}" class="hover:bg-base-300">
+<tr id="todo-{{ todo.id }}" class="hover:bg-base-300 text-sm sm:text-base">
     {% if todo.completed %}
         <td class="line-through decoration-2 decoration-gray-500 text-gray-400">{{ todo.title }}</td>
         <td class="line-through decoration-2 decoration-gray-400 text-gray-400">{{ todo.description|truncatechars:100 }}</td>
@@ -6,6 +6,7 @@
         <td>{{ todo.title }}</td>
         <td>{{ todo.description|truncatechars:100 }}</td>
     {% endif %}
+
     <td class="text-center">
         <input
             type="checkbox"
@@ -17,24 +18,61 @@
             hx-swap="outerHTML"
         />
     </td>
-    <td class="flex justify-center gap-2"> 
-        <a 
-        class="btn btn-sm btn-outline btn-info"
-        hx-get="{% url 'todos:edit-todo' todo.id %}" 
-        hx-target="#dialog-container" 
-        hx-swap="innerHTML"
-        >
-        ✏️ Edit</a>  
-        
-        <a 
-            class="btn btn-sm btn-outline btn-error"
-            hx-delete="{% url 'todos:delete_task' todo.id %}"
-            hx-trigger="click"
-            hx-confirm="Do you want to delete this task?"
-            hx-on:task-deleted="this.closest('tr').remove();" 
+
+    <td class="text-center">
+        <!-- Buttons for large screens -->
+        <div class="hidden sm:flex justify-center gap-2">
+            <a 
+                class="btn btn-sm btn-outline btn-info"
+                hx-get="{% url 'todos:edit-todo' todo.id %}" 
+                hx-target="#dialog-container" 
+                hx-swap="innerHTML"
             >
-            🗑️ Delete
-        </a>
+                Edit
+            </a>
+
+            <form 
+                method="POST"
+                hx-delete="{% url 'todos:delete_task' todo.id %}"
+                hx-target="#tbody"
+                hx-swap="outerHTML"
+                hx-confirm="Do you want to delete this task?"
+            >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline btn-error">Delete</button>
+            </form>
+        </div>
+
+        <!-- Three dots menu for small screens -->
+        <div class="relative inline-block sm:hidden">
+            <details class="dropdown dropdown-end">
+                <summary class="btn btn-sm btn-ghost text-xs">⋮</summary>
+                <ul class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-32 z-50 text-xs">
+                    <li>
+                        <a 
+                            class="text-xs"
+                            hx-get="{% url 'todos:edit-todo' todo.id %}" 
+                            hx-target="#dialog-container" 
+                            hx-swap="innerHTML"
+                        >
+                            Edit
+                        </a>
+                    </li>
+                    <li>
+                        <form 
+                            method="POST"
+                            hx-delete="{% url 'todos:delete_task' todo.id %}"
+                            hx-target="#tbody"
+                            hx-swap="outerHTML"
+                            hx-confirm="Do you want to delete this task?"
+                        >
+                            {% csrf_token %}
+                            <button type="submit" class="text-xs text-red-500 w-full text-left px-2 py-1">Delete</button>
+                        </form>
+                    </li>
+                </ul>
+            </details>
+        </div>
     </td>
 </tr>
 

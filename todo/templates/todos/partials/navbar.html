@@ -92,8 +92,8 @@
     {% if user.is_authenticated %}
       <!-- Dropdown user -->
       <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-sm rounded-btn">
-          <b style="font-size: large;">👤 {{ user.username }}</b>
+        <div tabindex="0" role="button" class="btn btn-ghost btn-sm rounded-btn max-w-[140px] overflow-hidden truncate" title="{{ user.username }}">
+          <b class="text-base truncate">{{ user.username|truncatechars:5 }}</b>
         </div>
         <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-40">
           <li>

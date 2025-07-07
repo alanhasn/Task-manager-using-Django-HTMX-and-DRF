@@ -1,51 +1,49 @@
 # =========== IMPORTS ===========
-from django.contrib import messages
-from django.shortcuts import HttpResponse , render
-from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-from django.urls import reverse_lazy
-from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import LoginView
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.core.validators import validate_email
+from django.shortcuts import HttpResponse, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
+
+from decouple import config
 from .forms import CustomUserCreationForm
 
-# def register(request):
-#     form = CustomUserCreationForm(request.POST)
-#     if request.user.is_authenticated:
-#         return redirect("todos:home")
-    
-#     if request.headers.get("HX-Request") == "true":
-#         username = form.cleaned_data.get("username")
-#         if User.objects.filter(username=username).exists():
-#             return HttpResponse("This username is already exist")
-#         else: 
-#             return HttpResponse("this username is Available")
-        
-#     if request.method == "POST":
-#         if form.is_valid():
-#             user = form.save()
-#             auth_login(request , user)
-#             return redirect("todos:home")
-#         return render(request ,"registration/signup.html" , {"form":form} )
-        
-    # return render(request , "registration/signup.html" , {"form":form})
 
 # REGISTER USER VIEW
 class RegisterView(FormView):
-    template_name = "registration/signup.html"
+    template_name = "account/registration/signup.html"
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy("todos:home")
+    success_url = reverse_lazy("accounts:activation_sent")
 
     # This method is called when the form is valid
-    # It saves the user and logs them in
     def form_valid(self, form):
-        user = form.save()
-        auth_login(self.request , user=user )
+        user = form.save(commit=False)
+        user.is_active=False # Deactivate the account
+        user.save()
+
+        # Send email verification
+        current_site = get_current_site(self.request) # get current site
+        subject = 'Activate Your Account'
+
+        message = render_to_string('account/email_verification.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+        })
+        send_mail(subject, message, config("EMAIL_HOST_USER") , [user.email]) 
+
         return super().form_valid(form)
     
     # This method is called to check if the user is authenticated
@@ -57,7 +55,7 @@ class RegisterView(FormView):
 
 # LOGIN VIEW
 class CustomLoginView(LoginView):
-    template_name = "registration/login.html"
+    template_name = "account/registration/login.html"
     redirect_authenticated_user = True # Redirect authenticated users to the home page
     
     # This method is called to get the success URL after login
@@ -70,7 +68,22 @@ def logout_view(request):
     auth_logout(request)  # Remove the user from the session
     return redirect("accounts:login")
 
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except Exception:
+        user = None
 
+    if user and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return render(request,"account/account_activated.html")
+    else:
+        return HttpResponse("Activation link is invalid!,Try Again")
+
+class ActivationSentView(TemplateView):
+    template_name = "account/activation_sent.html"
 
 
 # ======= HTMX View for Checking username and email =======
@@ -104,4 +117,4 @@ def check_email(request):
 
 # 404 page not found view
 # def not_found_view(request , exception=True):
-#     return render(request , "404.html" , status=403)
+#     return render(request , "account/404.html" , status=403)
