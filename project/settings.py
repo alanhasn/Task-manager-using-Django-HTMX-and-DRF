@@ -11,7 +11,7 @@ SECRET_KEY = config("SECRET_KEY", default="django-insecure-production-secret-key
 DEBUG = config("DEBUG", default=True, cast=bool)
 ENVIRONMENT = config("ENVIRONMENT", default="development")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["tigrisriversimorg.pythonanywhere.com"]
 
 # ==================== [ INSTALLED APPS ] ====================
 CUSTOM_APPS = [ 

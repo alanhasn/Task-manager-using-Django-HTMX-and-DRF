@@ -1,6 +1,7 @@
 venv/
 ENV/
 env/
+GEMINI.md
 .venv/
 api.http
 
